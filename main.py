@@ -7,11 +7,6 @@ from pandas import DataFrame
 from numpy import ndarray
 
 
-basedir = abspath(os.path.dirname(__file__))
-csv_files = join(basedir, 'csv_files')
-out_figs = join(basedir, 'out_figs')
-
-
 def percentage(part: float, tot: float) -> float:
     assert part < tot
     return part * 100 / tot
@@ -31,6 +26,10 @@ def plot_save(ax, x: ndarray, y: ndarray, labels: ndarray):
 
 
 if __name__ == "__main__":
+    basedir = abspath(os.path.dirname(__file__))
+    csv_files = join(basedir, 'csv_files')
+    out_figs = join(basedir, 'out_figs')
+
     test_vs_confirmed_cases_csv = join(csv_files, 'tests-vs-confirmed-cases-covid-19.csv')
     data: DataFrame = pd.read_csv(test_vs_confirmed_cases_csv)
     data_testvscases = data[
