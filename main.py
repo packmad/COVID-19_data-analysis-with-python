@@ -9,7 +9,9 @@ basedir = abspath(os.path.dirname(__file__))
 csv_files = join(basedir, 'csv_files')
 out_figs = join(basedir, 'out_figs')
 
+
 def percentage(part: float, tot: float) -> float:
+    assert part < tot
     return part * 100 / tot
 
 
@@ -37,15 +39,16 @@ if __name__ == "__main__":
     )
     res = md[['Entity', 'Test/Population', 'Confirmed/Population']].sort_values('Test/Population', ascending=False)
 
-    print(res.to_string())
+    print(res.to_string(index=False))
 
     x = res['Confirmed/Population'].to_numpy()
     y = res['Test/Population'].to_numpy()
     labels = res['Entity'].to_numpy()
     fig, ax = plt.subplots()
-    ax.set_xlabel('Test/Population %')
-    ax.set_ylabel('Confirmed/Population %')
-    ax.scatter(x, y)
+    ax.set_xlabel('Confirmed/Population %')
+    ax.set_ylabel('Test/Population %')
+    ax.scatter(x, y, s=10, marker='x')
+    txt_offset = 0.0003
     for i, txt in enumerate(labels):
-        ax.annotate(txt, xy=(x[i], y[i]))
+        ax.annotate(txt, xy=(x[i], y[i]), xytext=(x[i] + txt_offset, y[i] + txt_offset))
     fig.savefig(join(out_figs, 'Test-Confirmed-Population.png'))
