@@ -7,7 +7,7 @@ from pandas import DataFrame
 
 basedir = abspath(os.path.dirname(__file__))
 csv_files = join(basedir, 'csv_files')
-
+out_figs = join(basedir, 'out_figs')
 
 def percentage(part: float, tot: float) -> float:
     return part * 100 / tot
@@ -43,9 +43,9 @@ if __name__ == "__main__":
     y = res['Test/Population'].to_numpy()
     labels = res['Entity'].to_numpy()
     fig, ax = plt.subplots()
-    ax.set_xlabel('Test/Population')
-    ax.set_ylabel('Confirmed/Population')
+    ax.set_xlabel('Test/Population %')
+    ax.set_ylabel('Confirmed/Population %')
     ax.scatter(x, y)
     for i, txt in enumerate(labels):
         ax.annotate(txt, xy=(x[i], y[i]))
-    fig.show()
+    fig.savefig(join(out_figs, 'Test-Confirmed-Population.png'))
